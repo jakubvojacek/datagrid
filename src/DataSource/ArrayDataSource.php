@@ -28,6 +28,11 @@ class ArrayDataSource implements IDataSource
 	protected $data = [];
 
 	/**
+	 * @var array
+	 */
+	protected $dataOriginal = [];
+
+	/**
 	 * @var int
 	 */
 	protected $count = 0;
@@ -48,7 +53,7 @@ class ArrayDataSource implements IDataSource
 
 	public function getCount(): int
 	{
-		return sizeof($this->data);
+		return sizeof($this->dataOriginal);
 	}
 
 
@@ -109,7 +114,7 @@ class ArrayDataSource implements IDataSource
 	public function limit(int $offset, int $limit): IDataSource
 	{
 		$data = array_slice($this->data, $offset, $limit);
-		$this->setData($data);
+		$this->setOnlyData($data);
 
 		return $this;
 	}
@@ -352,6 +357,18 @@ class ArrayDataSource implements IDataSource
 	 * Set the data
 	 */
 	private function setData(array $dataSource): IDataSource
+	{
+		$this->data = $dataSource;
+		$this->dataOriginal = $dataSource;
+
+		return $this;
+	}
+
+
+	/**
+	 * Set the data
+	 */
+	private function setOnlyData(array $dataSource): IDataSource
 	{
 		$this->data = $dataSource;
 
