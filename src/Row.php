@@ -100,6 +100,10 @@ class Row
 		}
 
 		if (is_array($this->item)) {
+			if (!array_key_exists($key, $this->item)) {
+				return null;
+			}
+
 			$arrayValue = $this->item[$key];
 
 			if (is_object($arrayValue) && method_exists($arrayValue, '__toString')) {
